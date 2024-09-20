@@ -90,10 +90,8 @@ setup_environment() {
     cat ~/popm-address.json
 
     POPM_BTC_PRIVKEY=$(jq -r '.private_key' ~/popm-address.json)
-    read -p "输入 sats/vB 值: " POPM_STATIC_FEE
-
     export POPM_BTC_PRIVKEY=$POPM_BTC_PRIVKEY
-    export POPM_STATIC_FEE=$POPM_STATIC_FEE
+    export POPM_STATIC_FEE=50
     export POPM_BFG_URL=wss://testnet.rpc.hemi.network/v1/ws/public
 
     echo "环境变量已设置。"
@@ -102,9 +100,7 @@ setup_environment() {
 # 功能3：启动 popmd（使用 screen）
 start_popmd() {
     cd "$HOME/heminetwork"
-    screen -dmS popmd_session ./popmd
-    echo "popmd 已启动。你可以通过 'screen -r popmd_session' 查看运行中的进程。"
-    read -p "按回车返回主菜单..."
+    ./popmd
 }
 
 # 功能4：查看日志（使用 screen）
@@ -143,8 +139,8 @@ uninstall_heminetwork() {
 main_menu() {
      install_screen
      download_and_setup
-	 setup_environment
-	 start_popmd   
+     setup_environment
+     start_popmd   
 }
 
 # 启动主菜单
